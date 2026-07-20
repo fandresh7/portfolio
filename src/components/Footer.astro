@@ -1,0 +1,26 @@
+---
+import type { SiteContent, Lang } from '../data/content';
+import { navItems } from '../data/routes';
+
+interface Props {
+  content: SiteContent;
+  lang: Lang;
+}
+
+const { content, lang } = Astro.props;
+const year = new Date().getFullYear();
+const items = navItems(content, lang);
+---
+
+<footer class="border-t border-[var(--color-border)] dark:border-[var(--color-dark-border)]">
+  <div class="mx-auto flex max-w-5xl flex-col items-center justify-between gap-4 px-6 py-8 text-sm text-[var(--color-ink-soft)] dark:text-[var(--color-dark-ink-soft)] sm:flex-row">
+    <nav class="flex gap-6">
+      {items.map((item) => (
+        <a data-nav-link data-target={item.id} href={item.href} class="hover:text-[var(--color-ink)] dark:hover:text-[var(--color-dark-ink)]">
+          {item.label}
+        </a>
+      ))}
+    </nav>
+    <p>&copy; {year} {content.hero.name}. {content.footer.rights}</p>
+  </div>
+</footer>

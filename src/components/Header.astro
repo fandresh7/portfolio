@@ -1,0 +1,130 @@
+---
+import type { SiteContent } from '../data/content';
+import { navItems } from '../data/routes';
+
+interface Props {
+  content: SiteContent;
+  lang: 'es' | 'en';
+}
+
+const { content, lang } = Astro.props;
+const otherLang = lang === 'es' ? 'en' : 'es';
+const otherHref = otherLang === 'es' ? '/' : '/en/';
+const items = navItems(content, lang);
+const linkClass =
+  'rounded-full px-3.5 py-1.5 transition-colors hover:text-[var(--color-ink)] dark:hover:text-[var(--color-dark-ink)] aria-[current=true]:bg-[var(--color-accent)]/10 aria-[current=true]:font-medium aria-[current=true]:text-[var(--color-accent)] dark:aria-[current=true]:bg-[var(--color-dark-accent)]/15 dark:aria-[current=true]:text-[var(--color-dark-accent)]';
+---
+
+<header class="sticky top-0 z-50 border-b border-[var(--color-border)] bg-[var(--color-bg)]/80 backdrop-blur-md dark:border-[var(--color-dark-border)] dark:bg-[var(--color-dark-bg)]/80">
+  <div class="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
+    <a
+      href={lang === 'es' ? '/' : '/en/'}
+      class="flex h-9 w-9 items-center justify-center rounded-full bg-[var(--color-accent)] text-sm font-semibold text-white dark:bg-[var(--color-dark-accent)]"
+    >
+      AH
+    </a>
+
+    <nav class="hidden items-center gap-1 text-sm text-[var(--color-ink-soft)] dark:text-[var(--color-dark-ink-soft)] sm:flex">
+      {items.map((item) => (
+        <a data-nav-link data-target={item.id} href={item.href} class={linkClass}>
+          {item.label}
+        </a>
+      ))}
+    </nav>
+
+    <div class="flex items-center gap-2">
+      <a
+        href={otherHref}
+        class="flex h-9 w-9 items-center justify-center rounded-full border border-[var(--color-border)] text-xs font-medium text-[var(--color-ink-soft)] transition-colors hover:text-[var(--color-ink)] dark:border-[var(--color-dark-border)] dark:text-[var(--color-dark-ink-soft)] dark:hover:text-[var(--color-dark-ink)]"
+      >
+        {otherLang === 'es' ? 'ES' : 'EN'}
+      </a>
+      <button
+        id="theme-toggle"
+        aria-label="Toggle theme"
+        class="flex h-9 w-9 items-center justify-center rounded-full border border-[var(--color-border)] text-[var(--color-ink-soft)] transition-colors hover:text-[var(--color-ink)] dark:border-[var(--color-dark-border)] dark:text-[var(--color-dark-ink-soft)] dark:hover:text-[var(--color-dark-ink)]"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" class="h-4 w-4 dark:hidden">
+          <path d="M12 3v1.5M12 19.5V21M4.22 4.22l1.06 1.06M18.72 18.72l1.06 1.06M3 12h1.5M19.5 12H21M4.22 19.78l1.06-1.06M18.72 5.28l1.06-1.06" stroke-linecap="round"/>
+          <circle cx="12" cy="12" r="4.5"/>
+        </svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" class="hidden h-4 w-4 dark:block">
+          <path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5Z" stroke-linejoin="round" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<script is:inline>
+  const btn = document.getElementById('theme-toggle');
+  btn?.addEventListener('click', () => {
+    const isDark = document.documentElement.classList.toggle('dark');
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+  });
+</script>
+
+<script is:inline>
+  document.addEventListener('DOMContentLoaded', () => {
+    const navLinks = Array.from(document.querySelectorAll('[data-nav-link]'));
+
+    const setActive = (id) => {
+      navLinks.forEach((link) => {
+        link.setAttribute('aria-current', link.dataset.target === id ? 'true' : 'false');
+      });
+    };
+
+    navLinks.forEach((link) => {
+      link.addEventListener('click', (event) => {
+        const target = document.getElementById(link.dataset.target);
+        if (!target) return;
+        event.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        history.pushState(null, '', link.getAttribute('href'));
+        setActive(link.dataset.target);
+      });
+    });
+
+    const normalize = (path) => path.replace(/\/+$/, '') || '/';
+    const currentPath = normalize(window.location.pathname);
+    const isHome = currentPath === '/' || currentPath === '/en';
+    const initial = navLinks.find((link) => normalize(link.pathname) === currentPath)?.dataset.target;
+    setActive(initial ?? (isHome ? 'inicio' : ''));
+
+    const sectionIds = [...new Set(navLinks.map((link) => link.dataset.target))];
+    const sections = sectionIds.map((id) => document.getElementById(id)).filter(Boolean);
+
+    if (sections.length) {
+      const OFFSET = 140;
+      const updateActiveOnScroll = () => {
+        const atBottom =
+          window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2;
+
+        let currentId = sections[0].id;
+        for (const section of sections) {
+          if (section.getBoundingClientRect().top - OFFSET <= 0) {
+            currentId = section.id;
+          }
+        }
+        setActive(atBottom ? sections[sections.length - 1].id : currentId);
+      };
+
+      let ticking = false;
+      window.addEventListener(
+        'scroll',
+        () => {
+          if (ticking) return;
+          ticking = true;
+          requestAnimationFrame(() => {
+            updateActiveOnScroll();
+            ticking = false;
+          });
+        },
+        { passive: true }
+      );
+
+      // Let any auto-scroll from direct navigation settle before trusting scroll position.
+      requestAnimationFrame(() => requestAnimationFrame(updateActiveOnScroll));
+    }
+  });
+</script>

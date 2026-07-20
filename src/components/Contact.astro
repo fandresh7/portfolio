@@ -1,0 +1,26 @@
+---
+import type { SiteContent } from '../data/content';
+
+interface Props {
+  content: SiteContent;
+}
+
+const { content } = Astro.props;
+---
+
+<section id="contacto" class="mx-auto max-w-5xl px-6 py-20 text-center">
+  <h2 class="text-3xl font-semibold tracking-tight text-[var(--color-ink)] dark:text-[var(--color-dark-ink)]">
+    {content.contact.heading}
+  </h2>
+  <p class="mx-auto mt-3 max-w-md text-[var(--color-ink-soft)] dark:text-[var(--color-dark-ink-soft)]">
+    {content.contact.description}
+  </p>
+  <a
+    href={content.social.linkedin}
+    target="_blank"
+    rel="noopener noreferrer"
+    class="mt-8 inline-flex items-center gap-2 rounded-full bg-[var(--color-accent)] px-6 py-3 text-sm font-medium text-white transition-opacity hover:opacity-90 dark:bg-[var(--color-dark-accent)]"
+  >
+    {content.contact.cta}
+  </a>
+</section>

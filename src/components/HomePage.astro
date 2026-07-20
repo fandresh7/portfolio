@@ -1,0 +1,42 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from './Header.astro';
+import Hero from './Hero.astro';
+import Experience from './Experience.astro';
+import Projects from './Projects.astro';
+import Challenges from './Challenges.astro';
+import Contact from './Contact.astro';
+import Footer from './Footer.astro';
+import { content, type Lang } from '../data/content';
+import type { SectionId } from '../data/routes';
+
+interface Props {
+  lang: Lang;
+  scrollTarget?: SectionId;
+}
+
+const { lang, scrollTarget } = Astro.props;
+const c = content[lang];
+---
+
+<Layout title={`${c.hero.name} — ${c.hero.title}`} description={c.hero.bio}>
+  <Header content={c} lang={lang} />
+  <main>
+    <Hero content={c} />
+    <Experience content={c} />
+    <section class="mx-auto flex max-w-5xl flex-col gap-10 px-6 pb-20">
+      <Projects content={c} />
+      <Challenges content={c} />
+    </section>
+    <Contact content={c} />
+  </main>
+  <Footer content={c} lang={lang} />
+
+  {scrollTarget && (
+    <script is:inline define:vars={{ scrollTarget }}>
+      requestAnimationFrame(() => {
+        document.getElementById(scrollTarget)?.scrollIntoView({ block: 'start' });
+      });
+    </script>
+  )}
+</Layout>
