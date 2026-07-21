@@ -1,5 +1,6 @@
 ---
 import type { SiteContent } from '../data/content';
+import { techIcons } from '../data/techIcons';
 
 interface Props {
   content: SiteContent;
@@ -9,30 +10,44 @@ const { content } = Astro.props;
 ---
 
 <div class="rounded-2xl border border-dashed border-[var(--color-border)] p-6 dark:border-[var(--color-dark-border)]">
-  <h2 class="text-sm font-semibold uppercase tracking-widest text-[var(--color-ink-soft)] dark:text-[var(--color-dark-ink-soft)]">
+  <h2 data-i18n="challenges.heading" class="text-sm font-semibold uppercase tracking-widest text-[var(--color-ink-soft)] dark:text-[var(--color-dark-ink-soft)]">
     {content.challenges.heading}
   </h2>
-  <p class="mt-2 max-w-xl text-sm text-[var(--color-ink-soft)] dark:text-[var(--color-dark-ink-soft)]">
+  <p data-i18n="challenges.description" class="mt-2 max-w-xl text-sm text-[var(--color-ink-soft)] dark:text-[var(--color-dark-ink-soft)]">
     {content.challenges.description}
   </p>
 
   <div class="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-    {content.challenges.items.map((item) => (
+    {content.challenges.items.map((item, i) => (
       <div class="overflow-hidden rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] transition-colors hover:border-[var(--color-accent)]/50 dark:border-[var(--color-dark-border)] dark:bg-[var(--color-dark-surface)] dark:hover:border-[var(--color-dark-accent)]/50">
         <div class="aspect-video bg-[var(--color-bg-soft)] dark:bg-[var(--color-dark-bg)]" />
-        <div class="flex items-center justify-between gap-3 p-4">
-          <p class="text-sm font-medium text-[var(--color-ink)] dark:text-[var(--color-dark-ink)]">{item.name}</p>
-          <div class="flex shrink-0 gap-3 text-xs">
-            {item.demo && (
-              <a href={item.demo} target="_blank" rel="noopener noreferrer" class="font-medium text-[var(--color-accent)] hover:underline dark:text-[var(--color-dark-accent)]">
-                Demo
-              </a>
-            )}
+        <div class="flex flex-col gap-3 p-4">
+          <div class="flex items-center justify-between gap-3">
+            <p data-i18n={`challenges.items.${i}.name`} class="text-sm font-medium text-[var(--color-ink)] dark:text-[var(--color-dark-ink)]">{item.name}</p>
             {item.github && (
-              <a href={item.github} target="_blank" rel="noopener noreferrer" class="font-medium text-[var(--color-ink-soft)] hover:text-[var(--color-ink)] dark:text-[var(--color-dark-ink-soft)] dark:hover:text-[var(--color-dark-ink)]">
+              <a href={item.github} target="_blank" rel="noopener noreferrer" class="shrink-0 text-xs font-medium text-[var(--color-ink-soft)] hover:text-[var(--color-ink)] dark:text-[var(--color-dark-ink-soft)] dark:hover:text-[var(--color-dark-ink)]">
                 GitHub
               </a>
             )}
+          </div>
+
+          <div class="flex flex-wrap gap-2">
+            {item.tags.map((tag) => {
+              const icon = techIcons[tag];
+              return (
+                <span class="inline-flex items-center gap-1.5 rounded-full bg-[var(--color-bg-soft)] py-1 pl-1 pr-2.5 text-xs text-[var(--color-ink-soft)] dark:bg-[var(--color-dark-bg)] dark:text-[var(--color-dark-ink-soft)]">
+                  {icon && (
+                    <span
+                      class="flex h-4 w-4 shrink-0 items-center justify-center rounded text-[11px] font-bold leading-none"
+                      style={`background-color:${icon.bg}; color:${icon.fg}`}
+                    >
+                      {icon.label}
+                    </span>
+                  )}
+                  {tag}
+                </span>
+              );
+            })}
           </div>
         </div>
       </div>
