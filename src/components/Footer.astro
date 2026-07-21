@@ -16,11 +16,19 @@ const items = navItems(content, lang);
   <div class="mx-auto flex max-w-5xl flex-col items-center justify-between gap-4 px-6 py-8 text-sm text-[var(--color-ink-soft)] dark:text-[var(--color-dark-ink-soft)] sm:flex-row">
     <nav class="flex gap-6">
       {items.map((item) => (
-        <a data-nav-link data-target={item.id} href={item.href} class="hover:text-[var(--color-ink)] dark:hover:text-[var(--color-dark-ink)]">
+        <a
+          data-nav-link
+          data-target={item.id}
+          data-i18n={`nav.${item.key}`}
+          data-href-es={item.hrefs.es}
+          data-href-en={item.hrefs.en}
+          href={item.href}
+          class="hover:text-[var(--color-ink)] dark:hover:text-[var(--color-dark-ink)]"
+        >
           {item.label}
         </a>
       ))}
     </nav>
-    <p>&copy; {year} {content.hero.name}. {content.footer.rights}</p>
+    <p>&copy; {year} <span data-i18n="hero.name">{content.hero.name}</span>. <span data-i18n="footer.rights">{content.footer.rights}</span></p>
   </div>
 </footer>

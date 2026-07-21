@@ -9,7 +9,7 @@ interface Props {
 
 const { content, lang } = Astro.props;
 const otherLang = lang === 'es' ? 'en' : 'es';
-const otherHref = otherLang === 'es' ? '/' : '/en/';
+const otherHref = otherLang === 'es' ? '/es/' : '/';
 const items = navItems(content, lang);
 const linkClass =
   'rounded-full px-3.5 py-1.5 transition-colors hover:text-[var(--color-ink)] dark:hover:text-[var(--color-dark-ink)] aria-[current=true]:bg-[var(--color-accent)]/10 aria-[current=true]:font-medium aria-[current=true]:text-[var(--color-accent)] dark:aria-[current=true]:bg-[var(--color-dark-accent)]/15 dark:aria-[current=true]:text-[var(--color-dark-accent)]';
@@ -18,7 +18,7 @@ const linkClass =
 <header class="sticky top-0 z-50 border-b border-[var(--color-border)] bg-[var(--color-bg)]/80 backdrop-blur-md dark:border-[var(--color-dark-border)] dark:bg-[var(--color-dark-bg)]/80">
   <div class="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
     <a
-      href={lang === 'es' ? '/' : '/en/'}
+      href={lang === 'es' ? '/es/' : '/'}
       class="flex h-9 w-9 items-center justify-center rounded-full bg-[var(--color-accent)] text-sm font-semibold text-white dark:bg-[var(--color-dark-accent)]"
     >
       AH
@@ -26,7 +26,15 @@ const linkClass =
 
     <nav class="hidden items-center gap-1 text-sm text-[var(--color-ink-soft)] dark:text-[var(--color-dark-ink-soft)] sm:flex">
       {items.map((item) => (
-        <a data-nav-link data-target={item.id} href={item.href} class={linkClass}>
+        <a
+          data-nav-link
+          data-target={item.id}
+          data-i18n={`nav.${item.key}`}
+          data-href-es={item.hrefs.es}
+          data-href-en={item.hrefs.en}
+          href={item.href}
+          class={linkClass}
+        >
           {item.label}
         </a>
       ))}
@@ -35,6 +43,10 @@ const linkClass =
     <div class="flex items-center gap-2">
       <a
         href={otherHref}
+        data-lang-toggle
+        data-other-lang={otherLang}
+        data-href-es="/es/"
+        data-href-en="/"
         class="flex h-9 w-9 items-center justify-center rounded-full border border-[var(--color-border)] text-xs font-medium text-[var(--color-ink-soft)] transition-colors hover:text-[var(--color-ink)] dark:border-[var(--color-dark-border)] dark:text-[var(--color-dark-ink-soft)] dark:hover:text-[var(--color-dark-ink)]"
       >
         {otherLang === 'es' ? 'ES' : 'EN'}

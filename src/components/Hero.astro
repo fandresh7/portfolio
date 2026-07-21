@@ -13,16 +13,16 @@ const { content } = Astro.props;
     AH
   </div>
 
-  <p class="mt-8 text-sm font-medium uppercase tracking-widest text-[var(--color-accent)] dark:text-[var(--color-dark-accent)]">
+  <p data-i18n="hero.kicker" class="mt-8 text-sm font-medium uppercase tracking-widest text-[var(--color-accent)] dark:text-[var(--color-dark-accent)]">
     {content.hero.kicker}
   </p>
 
   <h1 class="mt-3 max-w-3xl text-4xl font-semibold tracking-tight text-[var(--color-ink)] sm:text-5xl dark:text-[var(--color-dark-ink)]">
-    {content.hero.name}
-    <span class="block text-[var(--color-ink-soft)] dark:text-[var(--color-dark-ink-soft)]">{content.hero.title}</span>
+    <span data-i18n="hero.name">{content.hero.name}</span>
+    <span data-i18n="hero.title" class="block text-[var(--color-ink-soft)] dark:text-[var(--color-dark-ink-soft)]">{content.hero.title}</span>
   </h1>
 
-  <p class="mt-6 max-w-2xl text-lg leading-relaxed text-[var(--color-ink-soft)] dark:text-[var(--color-dark-ink-soft)]">
+  <p data-i18n="hero.bio" class="mt-6 max-w-2xl text-lg leading-relaxed text-[var(--color-ink-soft)] dark:text-[var(--color-dark-ink-soft)]">
     {content.hero.bio}
   </p>
 

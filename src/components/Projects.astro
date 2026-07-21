@@ -10,15 +10,15 @@ const { content } = Astro.props;
 ---
 
 <div id="proyectos">
-  <h2 class="text-2xl font-semibold tracking-tight text-[var(--color-ink)] dark:text-[var(--color-dark-ink)]">
+  <h2 data-i18n="projects.heading" class="text-2xl font-semibold tracking-tight text-[var(--color-ink)] dark:text-[var(--color-dark-ink)]">
     {content.projects.heading}
   </h2>
-  <p class="mt-2 max-w-xl text-[var(--color-ink-soft)] dark:text-[var(--color-dark-ink-soft)]">
+  <p data-i18n="projects.subheading" class="mt-2 max-w-xl text-[var(--color-ink-soft)] dark:text-[var(--color-dark-ink-soft)]">
     {content.projects.subheading}
   </p>
 
   <div class="mt-8 grid gap-4 sm:grid-cols-2">
-    {content.projects.items.map((project) => (
+    {content.projects.items.map((project, i) => (
       <article class={`relative rounded-2xl border bg-[var(--color-surface)] p-5 transition-colors dark:bg-[var(--color-dark-surface)] ${project.company ? 'border-[var(--color-accent)]/30 hover:border-[var(--color-accent)] dark:border-[var(--color-dark-accent)]/30 dark:hover:border-[var(--color-dark-accent)]' : 'border-[var(--color-border)] hover:border-[var(--color-accent)]/50 dark:border-[var(--color-dark-border)] dark:hover:border-[var(--color-dark-accent)]/50'} ${project.featured ? 'sm:col-span-2' : ''}`}>
         {project.company && (
           <span class="mb-3 flex w-fit items-center gap-1.5 rounded-full bg-[var(--color-accent)]/10 px-2.5 py-1 text-[11px] font-medium text-[var(--color-accent)] dark:bg-[var(--color-dark-accent)]/15 dark:text-[var(--color-dark-accent)]">
@@ -29,10 +29,10 @@ const { content } = Astro.props;
             {project.company}
           </span>
         )}
-        <h3 class="text-base font-semibold text-[var(--color-ink)] dark:text-[var(--color-dark-ink)]">
+        <h3 data-i18n={`projects.items.${i}.name`} class="text-base font-semibold text-[var(--color-ink)] dark:text-[var(--color-dark-ink)]">
           {project.name}
         </h3>
-        <p class="mt-2 text-[15px] leading-relaxed text-[var(--color-ink-soft)] dark:text-[var(--color-dark-ink-soft)]">
+        <p data-i18n={`projects.items.${i}.description`} class="mt-2 text-[15px] leading-relaxed text-[var(--color-ink-soft)] dark:text-[var(--color-dark-ink-soft)]">
           {project.description}
         </p>
 

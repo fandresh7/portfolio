@@ -1,0 +1,87 @@
+{
+  "nav": {
+    "home": "Home",
+    "projects": "Projects",
+    "experience": "Experience",
+    "contact": "Contact"
+  },
+  "hero": {
+    "kicker": "Software engineer",
+    "name": "Andrés Hortúa",
+    "title": "Frontend Developer",
+    "bio": "Building web applications driven by curiosity and the need to create things that are genuinely useful. I try to help whenever I can — in code and outside of it."
+  },
+  "experience": {
+    "heading": "Experience",
+    "items": [
+      {
+        "company": "Superlikers",
+        "role": "Senior Frontend Developer",
+        "period": "2020 — Present",
+        "initials": "SL"
+      },
+      {
+        "company": "Smart4",
+        "role": "Frontend Developer",
+        "period": "2018 — 2019",
+        "initials": "S4"
+      }
+    ]
+  },
+  "projects": {
+    "heading": "Projects",
+    "subheading": "Things I've worked on, both in and out of working hours.",
+    "items": [
+      {
+        "name": "Gamification programs",
+        "description": "Frontend for several gamification platforms for large consumer brands, plus the company-wide dashboard. Built with Angular, focused on complex forms and integrations across multiple microsites.",
+        "tags": ["Angular", "TypeScript", "RxJS"],
+        "featured": true,
+        "company": "Superlikers"
+      },
+      {
+        "name": "AI-powered invoice digitization",
+        "description": "A system where users upload a photo of a receipt; the Veryfi Lens API extracts the line items, which are then automatically logged as purchases through the Superlikers API. NestJS backend, Vite frontend.",
+        "tags": ["NestJS", "Vite", "Veryfi API"],
+        "featured": true,
+        "company": "Superlikers"
+      },
+      {
+        "name": "fin",
+        "description": "A personal app for managing my own finances. It came out of a real need and I still use it every day.",
+        "tags": ["TypeScript"],
+        "github": "https://github.com/fandresh7/fin"
+      },
+      {
+        "name": "Spotify App",
+        "description": "A web client consuming the Spotify API to explore artists, albums and playlists.",
+        "tags": ["TypeScript", "REST API"],
+        "github": "https://github.com/fandresh7/spotify-app",
+        "demo": "https://spotify-app-teal-psi.vercel.app"
+      }
+    ]
+  },
+  "challenges": {
+    "heading": "Code challenges",
+    "description": "Frontend Mentor exercises to practice fundamentals: layout, accessibility and state across different frameworks.",
+    "items": [
+      { "name": "Kanban board", "tags": ["Angular", "NestJS"], "github": "https://github.com/fandresh7/frontendmentor-kanban-app" },
+      { "name": "Finance app", "tags": ["Angular"], "github": "https://github.com/fandresh7/frontendmentor-finance-app" },
+      { "name": "Todo app", "tags": ["Angular"], "github": "https://github.com/fandresh7/frontendmentor-todo-app" },
+      { "name": "Countries app", "tags": ["Angular"], "github": "https://github.com/fandresh7/frontendmentor-countries-app" },
+      { "name": "Invoice app", "tags": ["Angular"], "github": "https://github.com/fandresh7/frontendmentor-invoice-app" }
+    ]
+  },
+  "contact": {
+    "heading": "Let's work together",
+    "description": "I always try to help however I can. If you have something in mind, reach out.",
+    "cta": "Message me on LinkedIn"
+  },
+  "footer": {
+    "rights": "All rights reserved."
+  },
+  "social": {
+    "github": "https://github.com/fandresh7",
+    "linkedin": "https://www.linkedin.com/"
+  }
+}
