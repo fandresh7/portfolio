@@ -5,6 +5,7 @@ import Hero from './Hero.astro';
 import Experience from './Experience.astro';
 import Projects from './Projects.astro';
 import Challenges from './Challenges.astro';
+import ChallengeGallery from './ChallengeGallery.astro';
 import Contact from './Contact.astro';
 import Footer from './Footer.astro';
 import { content, type Lang } from '../data/content';
@@ -31,6 +32,7 @@ const c = content[lang];
     <Contact content={c} />
   </main>
   <Footer content={c} lang={lang} />
+  <ChallengeGallery />
 
   {scrollTarget && (
     <script is:inline define:vars={{ scrollTarget }}>

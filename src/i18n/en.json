@@ -13,64 +13,43 @@
   },
   "experience": {
     "heading": "Experience",
-    "items": [
-      {
-        "company": "Superlikers",
+    "items": {
+      "superlikers": {
         "role": "Senior Frontend Developer",
-        "period": "2020 — Present",
-        "initials": "SL"
+        "period": "2020 — Present"
       },
-      {
-        "company": "Smart4",
+      "smart4": {
         "role": "Frontend Developer",
-        "period": "2018 — 2019",
-        "initials": "S4"
+        "period": "2018 — 2019"
       }
-    ]
+    }
   },
   "projects": {
     "heading": "Projects",
     "subheading": "Things I've worked on, both in and out of working hours.",
-    "items": [
-      {
+    "items": {
+      "gamification": {
         "name": "Gamification programs",
-        "description": "Frontend for several gamification platforms for large consumer brands, plus the company-wide dashboard. Built with Angular, focused on complex forms and integrations across multiple microsites.",
-        "tags": ["Angular", "TypeScript", "RxJS"],
-        "featured": true,
-        "company": "Superlikers"
+        "description": "Frontend for several gamification platforms for large consumer brands, plus the company-wide dashboard. Built with Angular, focused on complex forms and integrations across multiple microsites."
       },
-      {
+      "invoice-ai": {
         "name": "AI-powered invoice digitization",
-        "description": "A system where users upload a photo of a receipt; the Veryfi Lens API extracts the line items, which are then automatically logged as purchases through the Superlikers API. NestJS backend, Vite frontend.",
-        "tags": ["NestJS", "Vite", "Veryfi API"],
-        "featured": true,
-        "company": "Superlikers"
+        "description": "A system where users upload a photo of a receipt; the Veryfi Lens API extracts the line items, which are then automatically logged as purchases through the Superlikers API. NestJS backend, Vite frontend."
       },
-      {
+      "fin": {
         "name": "fin",
-        "description": "A personal app for managing my own finances. It came out of a real need and I still use it every day.",
-        "tags": ["TypeScript"],
-        "github": "https://github.com/fandresh7/fin"
+        "description": "A personal app for managing my own finances. It came out of a real need and I still use it every day."
       },
-      {
+      "spotify": {
         "name": "Spotify App",
-        "description": "A web client consuming the Spotify API to explore artists, albums and playlists.",
-        "tags": ["TypeScript", "REST API"],
-        "github": "https://github.com/fandresh7/spotify-app",
-        "demo": "https://spotify-app-teal-psi.vercel.app"
+        "description": "A web client consuming the Spotify API to explore artists, albums and playlists."
       }
-    ]
+    }
   },
   "challenges": {
     "heading": "Code challenges",
     "description": "Frontend Mentor exercises to practice fundamentals: layout, accessibility and state across different frameworks.",
-    "items": [
-      { "name": "Kanban board", "tags": ["Angular", "NestJS"], "github": "https://github.com/fandresh7/frontendmentor-kanban-app" },
-      { "name": "Finance app", "tags": ["Angular"], "github": "https://github.com/fandresh7/frontendmentor-finance-app" },
-      { "name": "Todo app", "tags": ["Angular"], "github": "https://github.com/fandresh7/frontendmentor-todo-app" },
-      { "name": "Countries app", "tags": ["Angular"], "github": "https://github.com/fandresh7/frontendmentor-countries-app" },
-      { "name": "Invoice app", "tags": ["Angular"], "github": "https://github.com/fandresh7/frontendmentor-invoice-app" }
-    ]
+    "viewGallery": "View gallery"
   },
   "contact": {
     "heading": "Let's work together",
@@ -79,9 +58,5 @@
   },
   "footer": {
     "rights": "All rights reserved."
-  },
-  "social": {
-    "github": "https://github.com/fandresh7",
-    "linkedin": "https://www.linkedin.com/"
   }
 }

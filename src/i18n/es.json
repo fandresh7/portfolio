@@ -13,64 +13,43 @@
   },
   "experience": {
     "heading": "Experiencia",
-    "items": [
-      {
-        "company": "Superlikers",
+    "items": {
+      "superlikers": {
         "role": "Desarrollador Frontend Senior",
-        "period": "2020 — Presente",
-        "initials": "SL"
+        "period": "2020 — Presente"
       },
-      {
-        "company": "Smart4",
+      "smart4": {
         "role": "Desarrollador Frontend",
-        "period": "2018 — 2019",
-        "initials": "S4"
+        "period": "2018 — 2019"
       }
-    ]
+    }
   },
   "projects": {
     "heading": "Proyectos",
     "subheading": "Algunas cosas en las que he trabajado, dentro y fuera del horario laboral.",
-    "items": [
-      {
+    "items": {
+      "gamification": {
         "name": "Programas de gamificación",
-        "description": "Frontend de varias plataformas de gamificación para grandes marcas de consumo masivo, además del dashboard general de la empresa. Construidos en Angular, con foco en formularios complejos e integraciones con múltiples microsites.",
-        "tags": ["Angular", "TypeScript", "RxJS"],
-        "featured": true,
-        "company": "Superlikers"
+        "description": "Frontend de varias plataformas de gamificación para grandes marcas de consumo masivo, además del dashboard general de la empresa. Construidos en Angular, con foco en formularios complejos e integraciones con múltiples microsites."
       },
-      {
+      "invoice-ai": {
         "name": "Digitalización de facturas con IA",
-        "description": "Sistema donde el usuario sube la foto de una factura; usando la API de Veryfi Lens se extraen los productos y se registran automáticamente como compras a través de la API de Superlikers. Backend en NestJS, frontend en Vite.",
-        "tags": ["NestJS", "Vite", "Veryfi API"],
-        "featured": true,
-        "company": "Superlikers"
+        "description": "Sistema donde el usuario sube la foto de una factura; usando la API de Veryfi Lens se extraen los productos y se registran automáticamente como compras a través de la API de Superlikers. Backend en NestJS, frontend en Vite."
       },
-      {
+      "fin": {
         "name": "fin",
-        "description": "Aplicación personal para el manejo de mis finanzas. Nació de una necesidad propia y la sigo usando a diario.",
-        "tags": ["TypeScript"],
-        "github": "https://github.com/fandresh7/fin"
+        "description": "Aplicación personal para el manejo de mis finanzas. Nació de una necesidad propia y la sigo usando a diario."
       },
-      {
+      "spotify": {
         "name": "Spotify App",
-        "description": "Cliente web que consume la API de Spotify para explorar artistas, álbumes y playlists.",
-        "tags": ["TypeScript", "API REST"],
-        "github": "https://github.com/fandresh7/spotify-app",
-        "demo": "https://spotify-app-teal-psi.vercel.app"
+        "description": "Cliente web que consume la API de Spotify para explorar artistas, álbumes y playlists."
       }
-    ]
+    }
   },
   "challenges": {
     "heading": "Retos de código",
     "description": "Ejercicios de Frontend Mentor para practicar fundamentos: maquetación, accesibilidad y estado en distintos frameworks.",
-    "items": [
-      { "name": "Kanban board", "tags": ["Angular", "NestJS"], "github": "https://github.com/fandresh7/frontendmentor-kanban-app" },
-      { "name": "Finance app", "tags": ["Angular"], "github": "https://github.com/fandresh7/frontendmentor-finance-app" },
-      { "name": "Todo app", "tags": ["Angular"], "github": "https://github.com/fandresh7/frontendmentor-todo-app" },
-      { "name": "Countries app", "tags": ["Angular"], "github": "https://github.com/fandresh7/frontendmentor-countries-app" },
-      { "name": "Invoice app", "tags": ["Angular"], "github": "https://github.com/fandresh7/frontendmentor-invoice-app" }
-    ]
+    "viewGallery": "Ver galería"
   },
   "contact": {
     "heading": "¿Trabajamos juntos?",
@@ -79,9 +58,5 @@
   },
   "footer": {
     "rights": "Todos los derechos reservados."
-  },
-  "social": {
-    "github": "https://github.com/fandresh7",
-    "linkedin": "https://www.linkedin.com/"
   }
 }

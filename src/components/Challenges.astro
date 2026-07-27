@@ -18,12 +18,33 @@ const { content } = Astro.props;
   </p>
 
   <div class="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-    {content.challenges.items.map((item, i) => (
+    {content.challenges.items.map((item) => (
       <div class="overflow-hidden rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] transition-colors hover:border-[var(--color-accent)]/50 dark:border-[var(--color-dark-border)] dark:bg-[var(--color-dark-surface)] dark:hover:border-[var(--color-dark-accent)]/50">
-        <div class="aspect-video bg-[var(--color-bg-soft)] dark:bg-[var(--color-dark-bg)]" />
+        {item.images && item.images.length > 0 ? (
+          <button
+            type="button"
+            data-gallery-trigger
+            data-title={item.name}
+            data-images={JSON.stringify(item.images)}
+            data-images-mobile={JSON.stringify(item.imagesMobile ?? [])}
+            class="group relative block aspect-video w-full cursor-zoom-in overflow-hidden bg-[var(--color-bg-soft)] dark:bg-[var(--color-dark-bg)]"
+          >
+            <img
+              src={item.images[0]}
+              alt={item.name}
+              loading="lazy"
+              class="h-full w-full object-cover object-top transition-transform duration-300 group-hover:scale-105"
+            />
+            <span data-i18n="challenges.viewGallery" class="absolute inset-0 flex items-center justify-center bg-black/0 text-sm font-medium text-white opacity-0 transition-all group-hover:bg-black/40 group-hover:opacity-100">
+              {content.challenges.viewGallery}
+            </span>
+          </button>
+        ) : (
+          <div class="aspect-video bg-[var(--color-bg-soft)] dark:bg-[var(--color-dark-bg)]" />
+        )}
         <div class="flex flex-col gap-3 p-4">
           <div class="flex items-center justify-between gap-3">
-            <p data-i18n={`challenges.items.${i}.name`} class="text-sm font-medium text-[var(--color-ink)] dark:text-[var(--color-dark-ink)]">{item.name}</p>
+            <p class="text-sm font-medium text-[var(--color-ink)] dark:text-[var(--color-dark-ink)]">{item.name}</p>
             {item.github && (
               <a href={item.github} target="_blank" rel="noopener noreferrer" class="shrink-0 text-xs font-medium text-[var(--color-ink-soft)] hover:text-[var(--color-ink)] dark:text-[var(--color-dark-ink-soft)] dark:hover:text-[var(--color-dark-ink)]">
                 GitHub

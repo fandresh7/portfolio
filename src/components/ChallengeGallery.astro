@@ -1,0 +1,181 @@
+---
+import 'swiper/css';
+import 'swiper/css/effect-coverflow';
+import 'swiper/css/navigation';
+---
+
+<div
+  id="challenge-gallery"
+  data-gallery-modal
+  class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/90 p-4 backdrop-blur-sm sm:p-8"
+  role="dialog"
+  aria-modal="true"
+  aria-hidden="true"
+>
+  <button
+    type="button"
+    data-gallery-close
+    aria-label="Cerrar"
+    class="absolute right-4 top-4 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20 sm:right-6 sm:top-6"
+  >
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" class="h-5 w-5">
+      <path d="M6 6l12 12M18 6L6 18" stroke-linecap="round" />
+    </svg>
+  </button>
+
+  <p data-gallery-title class="absolute left-4 top-5 z-10 text-sm font-medium text-white/80 sm:left-6"></p>
+
+  <div class="relative w-full max-w-6xl">
+    <div data-gallery-swiper class="swiper">
+      <div data-gallery-wrapper class="swiper-wrapper"></div>
+    </div>
+
+    <button
+      type="button"
+      data-gallery-prev
+      aria-label="Anterior"
+      class="absolute left-2 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20 sm:left-6"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" class="h-5 w-5">
+        <path d="M15 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+    </button>
+    <button
+      type="button"
+      data-gallery-next
+      aria-label="Siguiente"
+      class="absolute right-2 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20 sm:right-6"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" class="h-5 w-5">
+        <path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+    </button>
+  </div>
+</div>
+
+<style>
+  #challenge-gallery.is-open {
+    display: flex;
+  }
+
+  [data-gallery-swiper] {
+    padding: 2.5rem 0 3.5rem;
+    overflow: visible;
+  }
+
+  [data-gallery-wrapper] .swiper-slide {
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: 0 20px 60px -15px rgba(0, 0, 0, 0.6);
+    transition: opacity 0.35s ease;
+  }
+
+  [data-gallery-swiper][data-orientation='landscape'] .swiper-slide {
+    width: min(60vw, 720px);
+    aspect-ratio: 16 / 9;
+  }
+
+  [data-gallery-swiper][data-orientation='portrait'] .swiper-slide {
+    width: min(70vw, 320px);
+    aspect-ratio: 9 / 16;
+  }
+
+  [data-gallery-wrapper] .swiper-slide:not(.swiper-slide-active) {
+    opacity: 0.35;
+  }
+
+  [data-gallery-wrapper] img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+  }
+</style>
+
+<script>
+  import Swiper from 'swiper';
+  import { EffectCoverflow, Navigation, Keyboard } from 'swiper/modules';
+
+  let swiper: Swiper | null = null;
+
+  const modal = document.querySelector<HTMLElement>('[data-gallery-modal]');
+  const wrapper = document.querySelector<HTMLElement>('[data-gallery-wrapper]');
+  const swiperEl = document.querySelector<HTMLElement>('[data-gallery-swiper]');
+  const titleEl = document.querySelector<HTMLElement>('[data-gallery-title]');
+
+  const isMobileViewport = () => window.matchMedia('(max-width: 640px)').matches;
+
+  function openGallery(images: string[], imagesMobile: string[], title: string) {
+    if (!modal || !wrapper || !swiperEl) return;
+
+    const useMobile = isMobileViewport() && imagesMobile.length > 0;
+    const slides = useMobile ? imagesMobile : images;
+    const orientation = useMobile ? 'portrait' : 'landscape';
+
+    wrapper.innerHTML = slides
+      .map((src) => `<div class="swiper-slide"><img src="${src}" alt="${title}" loading="lazy" /></div>`)
+      .join('');
+
+    if (titleEl) titleEl.textContent = title;
+    swiperEl.dataset.orientation = orientation;
+
+    modal.classList.add('is-open');
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+
+    swiper?.destroy(true, true);
+    swiper = new Swiper(swiperEl, {
+      modules: [EffectCoverflow, Navigation, Keyboard],
+      effect: 'coverflow',
+      centeredSlides: true,
+      slidesPerView: 'auto',
+      coverflowEffect: {
+        rotate: orientation === 'portrait' ? 25 : 35,
+        stretch: 0,
+        depth: orientation === 'portrait' ? 120 : 220,
+        modifier: 1,
+        slideShadows: false,
+      },
+      navigation: {
+        nextEl: '[data-gallery-next]',
+        prevEl: '[data-gallery-prev]',
+      },
+      keyboard: { enabled: true },
+      loop: slides.length > 1,
+      grabCursor: true,
+      speed: 550,
+    });
+  }
+
+  function closeGallery() {
+    if (!modal) return;
+    modal.classList.remove('is-open');
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+    swiper?.destroy(true, true);
+    swiper = null;
+  }
+
+  document.addEventListener('click', (event) => {
+    const trigger = (event.target as HTMLElement).closest<HTMLElement>('[data-gallery-trigger]');
+    if (trigger) {
+      const images = JSON.parse(trigger.dataset.images ?? '[]') as string[];
+      const imagesMobile = JSON.parse(trigger.dataset.imagesMobile ?? '[]') as string[];
+      openGallery(images, imagesMobile, trigger.dataset.title ?? '');
+      return;
+    }
+
+    if ((event.target as HTMLElement).closest('[data-gallery-close]')) {
+      closeGallery();
+      return;
+    }
+
+    if (event.target === modal) {
+      closeGallery();
+    }
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && modal?.classList.contains('is-open')) closeGallery();
+  });
+</script>

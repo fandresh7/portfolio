@@ -1,33 +1,23 @@
 import es from '../i18n/es.json';
 import en from '../i18n/en.json';
+import { experience, type ExperienceEntry } from './experience';
+import { projects, type ProjectEntry } from './projects';
+import { challenges, type ChallengeEntry } from './challenges';
+import { social } from './social';
 
 export type Lang = 'es' | 'en';
 
-export interface ProjectItem {
-  name: string;
-  description: string;
-  tags: string[];
-  github?: string;
-  demo?: string;
-  npm?: string;
-  featured?: boolean;
-  company?: string;
-}
-
-export interface ExperienceItem {
-  company: string;
+export interface ExperienceItem extends ExperienceEntry {
   role: string;
   period: string;
-  initials: string;
-  url?: string;
 }
 
-export interface ChallengeItem {
+export interface ProjectItem extends ProjectEntry {
   name: string;
-  tags: string[];
-  demo?: string;
-  github?: string;
+  description: string;
 }
+
+export type ChallengeItem = ChallengeEntry;
 
 export interface SiteContent {
   nav: {
@@ -54,6 +44,7 @@ export interface SiteContent {
   challenges: {
     heading: string;
     description: string;
+    viewGallery: string;
     items: ChallengeItem[];
   };
   contact: {
@@ -70,4 +61,40 @@ export interface SiteContent {
   };
 }
 
-export const content: Record<Lang, SiteContent> = { es, en } as Record<Lang, SiteContent>;
+type Translations = typeof es;
+
+function buildContent(t: Translations): SiteContent {
+  return {
+    nav: t.nav,
+    hero: t.hero,
+    experience: {
+      heading: t.experience.heading,
+      items: experience.map((entry) => ({
+        ...entry,
+        ...(t.experience.items as Record<string, { role: string; period: string }>)[entry.id],
+      })),
+    },
+    projects: {
+      heading: t.projects.heading,
+      subheading: t.projects.subheading,
+      items: projects.map((entry) => ({
+        ...entry,
+        ...(t.projects.items as Record<string, { name: string; description: string }>)[entry.id],
+      })),
+    },
+    challenges: {
+      heading: t.challenges.heading,
+      description: t.challenges.description,
+      viewGallery: t.challenges.viewGallery,
+      items: challenges,
+    },
+    contact: t.contact,
+    footer: t.footer,
+    social,
+  };
+}
+
+export const content: Record<Lang, SiteContent> = {
+  es: buildContent(es),
+  en: buildContent(en),
+};
